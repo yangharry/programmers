@@ -1,15 +1,18 @@
 function solution(number) {
-
-    let result = 0;
-
-    for(let i = 0, length = number.length; i < length; i++) {
-        for(let j = i+1; j < length; j++) {
-            for(let k = j+1; k < length; k++) {
-                if(number[i]+number[j]+number[k]) continue;
-                result++;
-            }
+    var answer = 0;
+    function dfs(idx, count, sum) {
+        if (idx > number.length) {
+            return;
         }
+        if (count === 3) {
+            if (sum === 0) {
+                answer++;
+            }
+            return;
+        }
+        dfs(idx + 1, count + 1, sum + number[idx]);
+        dfs(idx + 1, count, sum);
     }
-
-    return result;
+    dfs(0, 0, 0);
+    return answer;
 }
