@@ -1,25 +1,23 @@
-function solution(X, Y) {
-    const commonNumbers = [...new Set(X.split(''))].filter((number) => {
-        return Y.includes(number);
-    }).sort((a, b) => b - a)
+function solution(x, y){
+  let answer = "";
+  const xHash = new Map();
+  const yHash = new Map();
 
-    if (!commonNumbers.length) return '-1';
+  x.split("")
+      .forEach(i=> xHash.set(i, xHash.has(i) ?  xHash.get(i)  +1 : 1));
+  y.split("")
+      .forEach(i=> yHash.set(i, yHash.has(i) ? yHash.get(i) +1 : 1));
 
-    if (!Number(commonNumbers[0])) return '0';
 
-    return commonNumbers.map((number) => {
-        const Xcount = X.split('').reduce((count, Xnumber) => {
-            if (Xnumber === number) return count += 1;
+    for(let i = 9; i >= 0; i --){
+        const index = i.toString();
+        if(!xHash.has(index)) continue;
+        if(!yHash.has(index)) continue;
 
-            return count;
-        }, 0)
-
-        const Ycount = Y.split('').reduce((count, Ynumber) => {
-            if (Ynumber === number) return count += 1;
-
-            return count;
-        }, 0)        
-
-        return Xcount <= Ycount ? number.repeat(Xcount) : number.repeat(Ycount)
-    }).join('')
+        const num = Math.min(xHash.get(index), yHash.get(index))
+        answer += index.repeat(num)
+    }
+    if(answer.length === 0) return "-1"
+    if(answer[0] === "0" ) return "0";
+    return answer;
 }
