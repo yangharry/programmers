@@ -11,7 +11,7 @@ for (let i = k + 3; i < l + k + 3; i++) {
   direction.push(input[i].split(' ').map((e) => (isNaN(e) ? e : +e)));
 }
 
-function solution(n, appleLocation, l, wormDirection) {
+function solution(n, k, appleLocation, l, wormDirection) {
   let answer = 0;
   let location = [1, 1];
   let worm = [];
@@ -30,7 +30,7 @@ function solution(n, appleLocation, l, wormDirection) {
       location[0]++;
       answer++;
     }
-
+      
     if (
       location.includes(0) ||
       location.includes(n + 1) ||
@@ -78,4 +78,4 @@ function solution(n, appleLocation, l, wormDirection) {
   }
 }
 
-console.log(solution(n, location, l, direction));
+console.log(solution(n, k, location, l, direction));
