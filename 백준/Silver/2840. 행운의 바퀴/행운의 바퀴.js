@@ -20,6 +20,8 @@ function wheels() {
 
 let isBreak = '';
 
+let checkAlph = [];
+
 for (let i = 1; i <= k; i++) {
   let [num, alph] = input[i].split(' ');
   if (i == 1) {
@@ -29,7 +31,17 @@ for (let i = 1; i <= k; i++) {
       location = wheels();
     }
     if (wheel[location].value == '?' || wheel[location].value == alph) {
-      wheel[location].value = alph;
+      if (wheel[location].value == '?') {
+        checkAlph.push(alph);
+        if (checkAlph.length != [...new Set(checkAlph)].length) {
+          isBreak = '!';
+          break;
+        } else {
+          wheel[location].value = alph;
+        }
+      } else {
+        wheel[location].value = alph;
+      }
     } else {
       isBreak = '!';
       break;
