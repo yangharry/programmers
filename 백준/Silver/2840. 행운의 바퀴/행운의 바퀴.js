@@ -14,13 +14,17 @@ for (let i = 0; i < m; i++) {
 
 let location = 0;
 
+let isBreak = '';
+
+let checkAlph = [];
+
 function wheels() {
   return wheel[location].prev;
 }
 
-let isBreak = '';
-
-let checkAlph = [];
+function wheels2() {
+  lastKey = wheel[lastKey].next;
+}
 
 for (let i = 1; i <= k; i++) {
   let [num, alph] = input[i].split(' ');
@@ -33,14 +37,12 @@ for (let i = 1; i <= k; i++) {
     if (wheel[location].value == '?' || wheel[location].value == alph) {
       if (wheel[location].value == '?') {
         checkAlph.push(alph);
-        if (checkAlph.length != [...new Set(checkAlph)].length) {
+        if (checkAlph.indexOf(alph) != checkAlph.lastIndexOf(alph)) {
           isBreak = '!';
           break;
         } else {
           wheel[location].value = alph;
         }
-      } else {
-        wheel[location].value = alph;
       }
     } else {
       isBreak = '!';
@@ -49,17 +51,15 @@ for (let i = 1; i <= k; i++) {
   }
 }
 
+if (isBreak == '!') {
+  console.log('!');
+}
+
 let [lastNum, lastAlph] = input[k].split(' ');
 let answer = [];
 let lastKey = Object.keys(wheel).find((e) => wheel[e].value == lastAlph);
 
-function wheels2() {
-  lastKey = wheel[lastKey].next;
-}
-
-if (isBreak == '!') {
-  console.log('!');
-} else {
+if (isBreak != '!') {
   for (let i = 0; i < m; i++) {
     if (i == 0) {
       answer.push(wheel[lastKey].value);
@@ -69,17 +69,5 @@ if (isBreak == '!') {
     }
   }
 
-  if (answer.indexOf('?') == -1) {
-    if ([...new Set(answer)].length != answer.join('').length) {
-      console.log('!');
-    } else {
-      console.log(answer.join(''));
-    }
-  } else {
-    if ([...new Set(answer)].length - 1 == answer.join('').replaceAll('?', '').length) {
-      console.log(answer.join(''));
-    } else {
-      console.log('!');
-    }
-  }
+  console.log(answer.join(''));
 }
