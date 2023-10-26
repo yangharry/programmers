@@ -32,6 +32,7 @@ for (let i = 1; i <= k; i++) {
       wheel[location].value = alph;
     } else {
       isBreak = '!';
+      break;
     }
   }
 }
