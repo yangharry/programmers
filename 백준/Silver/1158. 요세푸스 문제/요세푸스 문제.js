@@ -1,20 +1,19 @@
-const [nk] = (require('fs').readFileSync(process.platform === 'linux' ? '/dev/stdin' : 'ex0.txt') + '')
+var [nk] = (require('fs').readFileSync(process.platform === 'linux' ? '/dev/stdin' : 'ex0.txt') + '')
   .trim()
   .split(/\r?\n/);
 
-const [n, k] = nk.split(' ').map((e) => (e = +e));
+var [n, k] = nk.split(' ').map((e) => (e = +e));
 
-const wheel = [];
-for (let i = 1; i <= n; i++) {
-  wheel.push(i);
+var x = [];
+var a = [];
+for (var i = 0; i < n; ++i) {
+  x.push(i + 1);
+}
+var t = 0;
+while (x.length > 0) {
+  t += k - 1;
+  t %= x.length;
+  a.push(x.splice(t, 1)[0]);
 }
 
-let i = 0;
-let answer = [];
-while (wheel.length > 0) {
-  i += k - 1;
-  i %= wheel.length;
-  answer.push(...wheel.splice(i, 1));
-}
-
-console.log(`<${answer.join(', ')}>`);
+console.log(`<${a.join(', ')}>`);
