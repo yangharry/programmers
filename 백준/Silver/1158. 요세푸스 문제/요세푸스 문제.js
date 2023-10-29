@@ -16,4 +16,4 @@ while (x.length > 0) {
   a.push(x.splice(t, 1)[0]);
 }
 
-console.log(`<${a.join(', ')}>`);
+process.stdout.write(`<${a.join(', ')}>`);
