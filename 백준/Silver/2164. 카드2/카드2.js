@@ -4,15 +4,12 @@ let n = require('fs')
   .trim()
   .split(process.platform === 'linux' ? '\n' : '\r\n');
 
-let stack = [];
-let index = 0;
-for (let i = 1; i <= +n; i++) {
-  stack.push(i);
+let d = n;
+let m = 1;
+
+while (d > 1) {
+  d /= 2;
+  m *= 2;
 }
 
-while (stack.length - index > 1) {
-  index++;
-  stack.push(stack[index++]);
-}
-
-console.log(stack[index]);
+console.log(2 * (n - m / 2));
