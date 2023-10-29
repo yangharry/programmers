@@ -6,18 +6,22 @@ const [n, ...input] = require('fs')
 let answer = [];
 for (let i = 0; i < n; i++) {
   let a = input[i];
-  while (true) {
-    if (a.indexOf('()') == -1) {
-      if (a.length == 0) {
-        answer.push('YES');
-        break;
-      } else {
-        answer.push('NO');
-        break;
+  let b = [];
+  let d = true;
+  for (let j = 0; j < a.length; j++) {
+    let c = a[j];
+    if (c == ')') {
+      if (!b.length || b.pop() == ')') {
+        d = false;
       }
     } else {
-      a = a.replaceAll('()', '');
+      b.push(c);
     }
+  }
+  if (!b.length && d) {
+    answer.push('YES');
+  } else {
+    answer.push('NO');
   }
 }
 
