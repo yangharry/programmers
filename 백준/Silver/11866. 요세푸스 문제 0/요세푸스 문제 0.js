@@ -1,18 +1,15 @@
-const fs = require('fs');
-let [nk] = fs
+let [nk] = require('fs')
   .readFileSync(process.platform === 'linux' ? '/dev/stdin' : 'ex0.txt')
   .toString()
-  .trim()
   .split(process.platform === 'linux' ? '\n' : '\r\n');
 
-var [n, k] = nk.split(' ').map(Number);
-
-var a = [];
-var answer = [];
-for (var i = 0; i < n; ++i) {
+let [n, k] = nk.split(' ').map(Number);
+let a = [];
+let answer = [];
+for (let i = 0; i < n; ++i) {
   a.push(i + 1);
 }
-var j = 0;
+let j = 0;
 while (a.length > 0) {
   j += k - 1;
   j %= a.length;
