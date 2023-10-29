@@ -11,5 +11,4 @@ while (d > 1) {
   d /= 2;
   m *= 2;
 }
-
-console.log(2 * (n - m / 2));
+process.stdout.write((2 * (n - m / 2)).toString());
