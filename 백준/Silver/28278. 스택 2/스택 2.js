@@ -6,9 +6,7 @@ const [n, ...input] = require('fs')
 let stack = [];
 let answer = [];
 for (let i = 0; i < n; i++) {
-  const [a, b] = input[i].split(' ').map((e) => {
-    return (e = +e);
-  });
+  const [a, b] = input[i].split(' ');
 
   if (a == 1) {
     stack.push(b);
@@ -35,4 +33,4 @@ for (let i = 0; i < n; i++) {
   }
 }
 
-console.log(answer.join('\n'));
+process.stdout.write(answer.join('\n'));
