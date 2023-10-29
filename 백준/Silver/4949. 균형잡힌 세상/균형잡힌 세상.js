@@ -28,5 +28,4 @@ let answer = [];
 for (let i = 0; i < input.length - 2; i++) {
   answer.push(solution(input[i]));
 }
-
 console.log(answer.join('\n'));
