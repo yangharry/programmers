@@ -1,41 +1,25 @@
-#include <iostream>
-#include <vector>
+#include <cstdio>
+#include <utility>
 
-int main() {
-    int n;
-    std::cin >> n;
-    
-    std::vector<int> input(n);
-    for (int i = 0; i < n; ++i) {
-        std::cin >> input[i];
-    }
+int main(void) {
+    std::pair<int, int> B[1000]; 
+    int N; scanf("%d", &N);
+    for (int i = 0; i < N; i++) scanf("%d", &B[i].second), B[i].first = i + 1;
 
-    std::vector<bool> popped(n, false);
-    std::vector<int> answer;
-    int remaining = n;
-    int index = 0;
-
-    while (remaining > 0) {
-        int steps = input[index];
-        popped[index] = true;
-        answer.push_back(index + 1);
-        remaining--;
-
-        if (remaining == 0) break;
-
-        int moveCount = std::abs(steps);
-        while (moveCount > 0) {
-            index = (index + (steps > 0 ? 1 : -1) + n) % n;
-            if (!popped[index]) {
-                moveCount--;
-            }
+    int count = 0, i = 0;
+    while (--N) {
+        printf("%d ", B[i].first);
+        count = B[i].second;
+        for (int k = i; k < N; k++) B[k] = B[k + 1];
+        if (count > 0) {
+            count--;
+            i = (count % N + i) % N;
         }
+        else if (count < 0) {
+            count = -count;
+            i = (N + i - (count % N)) % N;
+        }
+        else if (count == 0 && i == N) i = 0;
     }
-
-    for (int num : answer) {
-        std::cout << num << " ";
-    }
-    std::cout << std::endl;
-
-    return 0;
+    printf("%d", B[0]);
 }
