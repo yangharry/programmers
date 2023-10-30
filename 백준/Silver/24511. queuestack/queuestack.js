@@ -15,7 +15,9 @@ while (D.length < M) {
   if (A[j] == '0') {
     D.push(B[j]);
   }
-  j--;
+  if (j >= 0) {
+    j--;
+  }
   if (j < 0) {
     D.push(C[k]);
     k++;
