@@ -1,7 +1,7 @@
 let [N, A, B, M, C] = require('fs')
-  .readFileSync(process.platform === 'linux' ? '/dev/stdin' : 'ex0.txt')
+  .readFileSync('/dev/stdin')
   .toString()
-  .split(process.platform === 'linux' ? '\n' : '\r\n');
+  .split('\n');
 
 A = A.split(' ');
 B = B.split(' ');
