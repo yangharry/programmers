@@ -1,34 +1,35 @@
-let [n, ...input] = require('fs')
+let [n, ...connections] = require('fs')
   .readFileSync(process.platform === 'linux' ? '/dev/stdin' : 'ex0.txt')
   .toString()
   .split(process.platform === 'linux' ? '\n' : '\r\n');
 
 n = Number(n);
-let tree = {};
 
-for (let i = 1; i <= n; i++) {
-  tree[i] = { parent: null, children: [] };
-}
+const tree = {};
+const parent = Array(n + 1).fill(0); // 부모 노드를 저장할 배열
 
-for (let i = 0; i < n - 1; i++) {
-  let [a, b] = input[i].split(' ').map(Number);
-  tree[a].children.push(b);
-  tree[b].children.push(a);
-}
-function asdf(i) {
-  let children = tree[i].children;
-  for (let j = 0; j < children.length; j++) {
-    tree[children[j]].parent = i;
-    tree[children[j]].children = tree[children[j]].children.filter((e) => e != i);
-    asdf(children[j]);
+// 트리 구성
+connections.forEach((connection) => {
+  const [a, b] = connection.split(' ').map(Number);
+  if (!tree[a]) tree[a] = [];
+  if (!tree[b]) tree[b] = [];
+  tree[a].push(b);
+  tree[b].push(a);
+});
+
+function dfs(node, parentOfNode) {
+  parent[node] = parentOfNode;
+  for (const child of tree[node]) {
+    if (child !== parentOfNode) {
+      // 이미 방문한 노드(부모 노드)는 제외
+      dfs(child, node);
+    }
   }
 }
 
-asdf(1);
+// 루트 노드부터 DFS 실행
+dfs(1, 0);
 
-let answer = [];
-for (let i = 2; i <= n; i++) {
-  answer.push(tree[i].parent);
-}
-
-console.log(answer.join('\n'));
+// 결과 출력 (1번 노드는 루트이므로 제외)
+const result = parent.slice(2).join('\n');
+console.log(result);
