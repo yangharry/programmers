@@ -16,8 +16,8 @@ inputs.forEach((input) => {
   if (!tree[to]) {
     tree[to] = [];
   }
-  tree[from].push({ to: to, distance: distance });
-  tree[to].push({ from: from, distance: distance });
+  tree[from].push({ node: to, distance: distance });
+  tree[to].push({ node: from, distance: distance });
 });
 
 function dfs(start) {
@@ -33,8 +33,8 @@ function dfs(start) {
     }
 
     tree[node].forEach((children) => {
-      if (!visited[children.to || children.from]) {
-        recursive(children.to || children.from, distance + children.distance);
+      if (!visited[children.node]) {
+        recursive(children.node, distance + children.distance);
       }
     });
   }
