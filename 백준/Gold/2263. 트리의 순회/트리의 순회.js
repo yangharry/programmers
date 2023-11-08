@@ -1,40 +1,28 @@
-let [n, inorderInput, postorderInput] = require('fs')
+let input = require('fs')
   .readFileSync(process.platform === 'linux' ? '/dev/stdin' : 'ex0.txt')
   .toString()
   .split(process.platform === 'linux' ? '\n' : '\r\n');
 
-inorderInput = inorderInput.split(' ');
-postorderInput = postorderInput.split(' ');
+(function solution(input) {
+  const n = +input[0];
+  const [inorder, postorder] = input.slice(1).map((order) => order.split(' '));
+  const result = [];
 
-function solution(n, inOrder, postOrder) {
-  const preorder = [];
-  const inOderIndex = Array(n + 1);
-  const stack = [[0, n - 1, 0, n - 1]];
+  const inorderIdx = new Array(n + 1);
+  inorder.forEach((node, idx) => (inorderIdx[node] = idx));
 
-  inOrder.forEach((node, index) => {
-    inOderIndex[node] = index;
-  });
+  preorder(0, n - 1, 0, n - 1);
 
-  while (stack.length > 0) {
-    const [inStart, inEnd, postStart, postEnd] = stack.pop();
+  console.log(result.join(' '));
 
-    const index = inOderIndex[postOrder[postEnd]];
-    preorder[preorder.length] = inOrder[index];
+  function preorder(inStart, inEnd, postStart, postEnd) {
+    if (inStart > inEnd || postStart > postEnd) return;
+    const root = postorder[postEnd];
+    const rootIdx = inorderIdx[root];
+    const left = rootIdx - inStart;
+    result.push(root);
 
-    const leftCnt = index - inStart;
-    const rightCnt = inEnd - index;
-
-    if (rightCnt > 0) {
-      stack[stack.length] = [index + 1, inEnd, postStart + leftCnt, postEnd - 1];
-    }
-
-    if (leftCnt > 0) {
-      stack[stack.length] = [inStart, index - 1, postStart, postStart + leftCnt - 1];
-    }
+    preorder(inStart, rootIdx - 1, postStart, postStart + left - 1);
+    preorder(rootIdx + 1, inEnd, postStart + left, postEnd - 1);
   }
-
-  return preorder.join(' ');
-}
-
-const ans = solution(n, inorderInput, postorderInput);
-console.log(ans);
+})(input);
