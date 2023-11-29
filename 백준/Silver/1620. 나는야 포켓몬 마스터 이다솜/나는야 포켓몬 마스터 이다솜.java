@@ -24,15 +24,20 @@ class Main {
             nameToIndex.put(name, i + 1);
         }
 
+        StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < m; i++) {
             String monster = br.readLine();
             if (Character.isDigit(monster.charAt(0))) {
                 int index = Integer.parseInt(monster);
-                System.out.println(indexToName.get(index));
+                sb.append(indexToName.get(index)).append("\n");
             } else {
-                System.out.println(nameToIndex.get(monster));
+                sb.append(nameToIndex.get(monster)).append("\n");
+
             }
+
         }
+        System.out.print(sb);
 
     }
 
