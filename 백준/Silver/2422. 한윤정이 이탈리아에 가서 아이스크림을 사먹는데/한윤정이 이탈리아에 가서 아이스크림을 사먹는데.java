@@ -1,45 +1,37 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
-    public static void main(String[] args) throws IOException {
-        String osName = System.getProperty("os.name").toLowerCase();
-        boolean isLinux = osName.contains("linux");
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(isLinux ? System.in : new FileInputStream("ex0.txt")));
+        st = new StringTokenizer(br.readLine(), " ");
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
-        String[] line;
-        int n, m;
+        boolean[][] pair = new boolean[n+1][n+1];
 
-        Set<String> set = new HashSet<>();
-
-        line = br.readLine().split(" ");
-        n = Integer.parseInt(line[0]);
-        m = Integer.parseInt(line[1]);
-
-        for (int i = 0; i < m; i++) {
-            line = br.readLine().split(" ");
-            int a = Integer.parseInt(line[0]);
-            int b = Integer.parseInt(line[1]);
-            set.add(a + " " + b);
-            set.add(b + " " + a);
+        for(int i=0; i<m; i++) {
+            st = new StringTokenizer(br.readLine(), " ");
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            pair[x][y] = true;
+            pair[y][x] = true;
         }
 
-        int count = 0;
-
-        for (int i = 1; i <= n; i++) {
-            for (int j = i + 1; j <= n; j++) {
-                for (int k = j + 1; k <= n; k++) {
-                    if (!set.contains(i + " " + j) && !set.contains(j + " " + k) && !set.contains(i + " " + k)) {
-                        count++;
+        int answer = 0;
+        for(int i=1; i<=n; i++) {
+            for(int j=i+1; j<=n; j++) {
+                if(pair[i][j]) continue;
+                for(int k=j+1; k<=n; k++) {
+                    if(!pair[i][k] && !pair[j][k]) {
+                        answer++;
                     }
                 }
             }
         }
 
-        System.out.println(count);
-
+        System.out.println(answer);
     }
-
 }
