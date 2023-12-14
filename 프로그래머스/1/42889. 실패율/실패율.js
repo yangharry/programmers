@@ -10,7 +10,6 @@ function solution(N, stages) {
             map.set(i,[map.get(i)[0],map.get(i)[1]+1])
         }
     })
-    console.log(map)
     let result = []
     for(let i = 1 ; i <=N; i ++){
         let [a,b] = map.get(i)
