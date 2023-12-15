@@ -15,7 +15,7 @@ function solution(id_list, report, k) {
     
     id_list.map((a,i)=>{
         let result = 0;
-        [...신고한사람[a]].map((b)=>{
+        신고한사람[a].forEach((b)=>{
             if(신고당한사람[b].size >= k){
                 result ++
             }
